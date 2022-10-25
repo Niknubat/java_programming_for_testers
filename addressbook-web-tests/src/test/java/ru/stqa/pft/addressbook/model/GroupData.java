@@ -1,4 +1,4 @@
-package ru.stqa.pft.addressbook;
+package ru.stqa.pft.addressbook.model;
 
 // такое исполнение(строка ниже) предложила сама IDE
 //public record GroupData(String name, String header, String footer) {}

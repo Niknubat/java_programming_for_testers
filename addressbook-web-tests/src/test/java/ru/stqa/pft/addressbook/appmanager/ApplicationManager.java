@@ -9,9 +9,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.time.Duration;
 
 public class ApplicationManager {
-
     WebDriver wd;
 
+    private NavigationHelper navigationHelper;
     private GroupHelper groupHelper;
 
     public void init() {
@@ -19,6 +19,7 @@ public class ApplicationManager {
         wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         wd.get("http://localhost/addressbook/");
         groupHelper = new GroupHelper(wd);
+        navigationHelper = new NavigationHelper(wd);
         login("admin", "secret");
     }
 
@@ -32,12 +33,9 @@ public class ApplicationManager {
       wd.findElement(By.xpath("//input[@value='Login']")).click();
     }
 
-    public void gotoGroupPage() {
-      wd.findElement(By.linkText("groups")).click();
-    }
-
-    public void stop() {
+    public void stop() throws InterruptedException {
         logout();
+        Thread.sleep(2000);
         wd.quit();
     }
 
@@ -65,5 +63,9 @@ public class ApplicationManager {
 
     public GroupHelper getGroupHelper() {
         return groupHelper;
+    }
+
+    public NavigationHelper getNavigationHelper() {
+        return navigationHelper;
     }
 }

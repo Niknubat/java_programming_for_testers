@@ -5,17 +5,20 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.time.Duration;
 
 public class ApplicationManager {
-    public WebDriver wd;
+
+    WebDriver wd;
+
+    private GroupHelper groupHelper;
 
     public void init() {
         wd = new ChromeDriver();
         wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
         wd.get("http://localhost/addressbook/");
+        groupHelper = new GroupHelper(wd);
         login("admin", "secret");
     }
 
@@ -27,36 +30,6 @@ public class ApplicationManager {
       wd.findElement(By.name("pass")).clear();
       wd.findElement(By.name("pass")).sendKeys(password);
       wd.findElement(By.xpath("//input[@value='Login']")).click();
-    }
-
-    public void returnToGroupPage() {
-      wd.findElement(By.linkText("group page")).click();
-    }
-
-    public void submitGroupCreation() {
-      wd.findElement(By.name("submit")).click();
-    }
-
-    public void fillGroupForm(GroupData groupData) {
-      wd.findElement(By.name("group_name")).click();
-      wd.findElement(By.name("group_name")).clear();
-      wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
-      // Данным способом(заком строка) выполнила IDE что тоже работает + в классе тоже отличия
-      // wd.findElement(By.name("group_name")).sendKeys(groupData.name());
-      wd.findElement(By.name("group_header")).click();
-      wd.findElement(By.name("group_header")).clear();
-      wd.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
-      // Данным способом(заком строка) выполнила IDE что тоже работает + в классе тоже отличия
-      // wd.findElement(By.name("group_header")).sendKeys(groupData.header());
-      wd.findElement(By.name("group_footer")).click();
-      wd.findElement(By.name("group_footer")).clear();
-      wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
-      // Данным способом(заком строка) выполнила IDE что тоже работает + в классе тоже отличия
-      // wd.findElement(By.name("group_footer")).sendKeys(groupData.footer());
-    }
-
-    public void initGroupCrreation() {
-      wd.findElement(By.name("new")).click();
     }
 
     public void gotoGroupPage() {
@@ -90,11 +63,7 @@ public class ApplicationManager {
       }
     }
 
-    public void deleteSelectedGroups() {
-      wd.findElement(By.name("delete")).click();
-    }
-
-    public void selectGroup() {
-      wd.findElement(By.name("selected[]")).click();
+    public GroupHelper getGroupHelper() {
+        return groupHelper;
     }
 }

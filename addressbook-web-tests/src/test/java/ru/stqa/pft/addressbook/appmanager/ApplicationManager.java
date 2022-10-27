@@ -38,7 +38,7 @@ public class ApplicationManager {
     }
 
     public void stop() throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(0);
         wd.quit();
     }
 

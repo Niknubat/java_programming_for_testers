@@ -3,6 +3,8 @@ package ru.stqa.pft.addressbook.model;
 // такое исполнение(строка ниже) предложила сама IDE
 //public record GroupData(String name, String header, String footer) {}
 
+import java.util.Objects;
+
 // Так используется в курсе(более расширенно)
 // объект с 3-мя атрибутами, есть конструктор и три метода возвращающие эти атрибуты
 public class GroupData {
@@ -19,4 +21,24 @@ public class GroupData {
     public String getName() { return name; }
     public String getHeader() { return header; }
     public String getFooter() { return footer; }
+
+    @Override
+    public String toString() {
+        return "GroupData{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GroupData groupData = (GroupData) o;
+        return Objects.equals(name, groupData.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }

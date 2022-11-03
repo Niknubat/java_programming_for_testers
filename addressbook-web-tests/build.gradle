@@ -9,6 +9,7 @@ dependencies {
     implementation 'org.seleniumhq.selenium:selenium-java:4.5.2'
     implementation 'org.hamcrest:java-hamcrest:2.0.0.0'
     implementation group: 'com.beust', name: 'jcommander', version: '1.82'
+    implementation 'com.thoughtworks.xstream:xstream-parent:1.4.19'
 }
 
 test {

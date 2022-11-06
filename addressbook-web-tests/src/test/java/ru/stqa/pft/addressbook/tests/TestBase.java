@@ -7,6 +7,8 @@ import ru.stqa.pft.addressbook.appmanager.ApplicationManager;
 public class TestBase {
 
     protected static final ApplicationManager app = new ApplicationManager("ChromeDriver");
+//    protected static final ApplicationManager app = new ApplicationManager("InternetExplorerDriver");
+//    protected static final ApplicationManager app = new ApplicationManager("FirefoxDriver");
 
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws Exception {

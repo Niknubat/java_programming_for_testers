@@ -1,13 +1,11 @@
 package ru.stqa.pft.addressbook.model;
 
-// такое исполнение(строка ниже) предложила сама IDE
-//public record GroupData(String name, String header, String footer) {}
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
-import java.util.Objects;
-
-// Так используется в курсе(более расширенно)
-// объект с 3-мя атрибутами, есть конструктор и три метода возвращающие эти атрибуты
+@XStreamAlias("group")
 public class GroupData {
+    @XStreamOmitField
     private int id = Integer.MAX_VALUE;
     private String name;
     private String header;
@@ -20,8 +18,8 @@ public class GroupData {
         return this;
     }
 
-    public GroupData withName(String name) {
-        this.name = name;
+    public GroupData withFooter(String footer) {
+        this.footer = footer;
         return this;
     }
 
@@ -30,8 +28,8 @@ public class GroupData {
         return this;
     }
 
-    public GroupData withFooter(String footer) {
-        this.footer = footer;
+    public GroupData withName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -52,11 +50,16 @@ public class GroupData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupData groupData = (GroupData) o;
-        return id == groupData.id && Objects.equals(name, groupData.name);
+
+        if (id != groupData.id) return false;
+        return name != null ? name.equals(groupData.name) : groupData.name == null;
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }

@@ -5,11 +5,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Objects;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("group")
 @Entity
@@ -34,7 +32,16 @@ public class GroupData {
     @Type(type = "text")
     private String footer;
 
-    public int getId() { return id; }
+    @ManyToMany(mappedBy = "groups")
+    private Set<ContactData> contacts = new HashSet<ContactData>();
+
+    public Set<ContactData> getContacts() {
+        return contacts;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public GroupData withId(int id) {
         this.id = id;
@@ -75,9 +82,10 @@ public class GroupData {
         GroupData groupData = (GroupData) o;
 
         if (id != groupData.id) return false;
-        if (!Objects.equals(name, groupData.name)) return false;
-        if (!Objects.equals(header, groupData.header)) return false;
-        return Objects.equals(footer, groupData.footer);
+        if (name != null ? !name.equals(groupData.name) : groupData.name != null) return false;
+        if (header != null ? !header.equals(groupData.header) : groupData.header != null) return false;
+        return footer != null ? footer.equals(groupData.footer) : groupData.footer == null;
+
     }
 
     @Override

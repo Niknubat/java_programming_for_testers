@@ -1,0 +1,26 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.testng:testng:6.9.10'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.5.2'
+    implementation 'org.hamcrest:java-hamcrest:2.0.0.0'
+}
+
+test {
+    useTestNG {
+        suites 'src/test/resources/testng.xml'
+    }
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}" // Настройка позволяет указывать браузер
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}" // Настройка позволяет указывать конфигурационный файл, который позволяет описывать свойство окружения
+    }
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}" // Настройка позволяет включать и отключать проверки через интерфейс(а не только получать данные из БД)
+    }
+}

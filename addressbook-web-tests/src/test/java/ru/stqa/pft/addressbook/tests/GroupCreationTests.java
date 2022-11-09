@@ -55,12 +55,12 @@ public class GroupCreationTests extends TestBase {
     @Test(dataProvider = "validGroupsFromJson")
     public void testGroupCreation(GroupData group) {
         app.goTo().groupPage();
-        Groups before = app.group().all();  //- для списков
-//        Groups before = app.db().groups(); // построение списка групп до добавления новой группы
+//        Groups before = app.group().all();  //- для списков
+        Groups before = app.db().groups(); // получение списка групп до добавления новой группы
         app.group().create(group);
         assertThat(app.group().count(), equalTo(before.size() + 1)); // сравнение количества групп до и после добавления новой группы
-        Groups after = app.group().all();  //- для списков
-//        Groups after = app.db().groups(); // построение списка групп после добавления новой группы
+//        Groups after = app.group().all();  //- для списков
+        Groups after = app.db().groups(); // получение списка групп после добавления новой группы
         assertThat(after, equalTo(
               before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
@@ -76,5 +76,19 @@ public class GroupCreationTests extends TestBase {
 
         assertThat(after, equalTo(before));
     }
+
+    //    Тест который получает данные через UI, а не через БД +
+//    в файле groups с тестовыми данными, должны быть переносы строк(Пример: "header": "header\n1")
+//    @Test(enabled=false)
+//    @Test(dataProvider = "validGroupsFromJson")
+//    public void testGroupCreation(GroupData group) {
+//        app.goTo().groupPage();
+//        Groups before = app.group().all();  //- для списков
+//        app.group().create(group);
+//        assertThat(app.group().count(), equalTo(before.size() + 1)); // сравнение количества групп до и после добавления новой группы
+//        Groups after = app.group().all();  //- для списков
+//        assertThat(after, equalTo(
+//                before.withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+//    }
 
 }

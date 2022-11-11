@@ -37,9 +37,16 @@ public class ApplicationManager {
         wd.get(properties.getProperty("web.baseUrl"));
     }
 
-    public void stop() throws InterruptedException {
+    public void stop() {
 //        Thread.sleep(2);
         wd.quit();
     }
 
+    public HttpSession newSession() {
+        return new HttpSession(this);
+    }
+
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
 }

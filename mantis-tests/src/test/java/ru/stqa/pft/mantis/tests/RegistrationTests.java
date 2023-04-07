@@ -1,6 +1,5 @@
 package ru.stqa.pft.mantis.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -15,7 +14,7 @@ import static org.testng.Assert.assertTrue;
 
 public class RegistrationTests extends TestBase {
 
-    @BeforeMethod
+    @BeforeMethod // Данная строка(только сама антонация @BeforeMethod) коммитится при получение почты с использованием James (урок 82)
     public void startMailServer() {
         app.mail().start();
     }
@@ -26,8 +25,10 @@ public class RegistrationTests extends TestBase {
         String user = String.format("user%s", now);
         String password = "password";
         String email = String.format("user%s@localhost.localdomain", now);
+        //app.james().createUser(user, password); // Эта строка используется при получение почты с использованием James (раскоммичивается) (урок 82)
         app.registration().start(user, email);
-        List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
+        List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000); // Данная строка коммитится при получение почты с использованием James (урок 82)
+        //List<MailMessage> mailMessages = app.james().waitForMail(user, password, 60000);  // Эта строка используется при получение почты с использованием James (раскоммичивается) (урок 82)
         String confirmationLink = findConfirmationLink(mailMessages, email);
         app.registration().finish(confirmationLink, password);
         assertTrue(app.newSession().login(user, password));
@@ -39,7 +40,7 @@ public class RegistrationTests extends TestBase {
         return regex.getText(mailMessage.text); // Возврат куска текста, соответствующего регулярке
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true) // Данная строка(только сама антонация @AfterMethod(alwaysRun = true)) коммитится при получение почты с использованием James (урок 82)
     public void stopMailServer() {
         app.mail().stop();
     }

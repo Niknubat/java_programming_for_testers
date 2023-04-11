@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
@@ -34,7 +35,9 @@ public class ApplicationManager {
         dbHelper = new DbHelper();
 
         if (browser.equals("ChromeDriver")) {
-            wd = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--remote-allow-origins=*");
+            wd = new ChromeDriver(options);
         } else if (browser.equals("FirefoxDriver")) {
             wd = new FirefoxDriver();
         } else if (browser.equals("InternetExplorerDriver")) {

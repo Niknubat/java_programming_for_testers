@@ -38,13 +38,13 @@ public class ApplicationManager {
         dbHelper = new DbHelper();
 
         if ("".equals(properties.getProperty("selenium.server"))) {
-            if (browser.equals("ChromeDriver")) {
+            if (browser.equals("chrome")) {
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--remote-allow-origins=*");
                 wd = new ChromeDriver(options);
-            } else if (browser.equals("FirefoxDriver")) {
+            } else if (browser.equals("firefox")) {
                 wd = new FirefoxDriver();
-            } else if (browser.equals("InternetExplorerDriver")) {
+            } else if (browser.equals("internet explorer")) {
                 wd = new InternetExplorerDriver();
             }
         } else {

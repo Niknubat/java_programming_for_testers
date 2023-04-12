@@ -21,9 +21,9 @@ public class TestBase {
 
     Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-    protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", "FirefoxDriver"));
-//    protected static final ApplicationManager app = new ApplicationManager("InternetExplorerDriver");
-//    protected static final ApplicationManager app = new ApplicationManager("ChromeDriver");
+    protected static final ApplicationManager app = new ApplicationManager(System.getProperty("browser", "firefox"));
+//    protected static final ApplicationManager app = new ApplicationManager("internet explorer");
+//    protected static final ApplicationManager app = new ApplicationManager("chrome");
 
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws Exception {

@@ -7,9 +7,6 @@ plugins {
     mavenCentral()
 }
 
-configurations {
-    agent
-}
 
 dependencies {
     implementation 'org.testng:testng:6.9.10'
@@ -48,10 +45,6 @@ task testGroups(type: Test) {
     if (project.hasProperty('verifyUI')) {
         systemProperty 'verifyUI', "${verifyUI}"
     }
-}
-
-testGroups.doFirst {
-    jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
 
 task testContacts(type: Test) {

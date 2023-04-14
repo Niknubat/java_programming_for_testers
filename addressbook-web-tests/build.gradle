@@ -30,6 +30,7 @@ dependencies {
     implementation group: 'io.qameta.allure', name: 'allure-assertj', version: '2.17.3'
     implementation group: 'io.qameta.allure', name: 'allure-rest-assured', version: '2.17.3'
     implementation group: 'io.qameta.allure', name: 'allure-java-commons', version: '2.17.3'
+    implementation 'org.robotframework:robotframework:4.1.2'
 }
 
 task testGroups(type: Test) {
@@ -70,4 +71,11 @@ task testContacts(type: Test) {
     if (project.hasProperty('verifyUI')) {
         systemProperty 'verifyUI', "${verifyUI}"
     }
+}
+
+task rf(type: JavaExec) {
+    main = 'org.robotframework.RobotFramework' // Прописываем что основной запускаемы класс...
+    classpath = sourceSets.test.runtimeClasspath // Запуск всех тех библиотек, что и при запуске тестов
+    args '--outputdir', 'build/rf-report' // Директория в которую будет помещен отчет
+    args 'src/test/resources/rf' // Где находятся сценарии
 }
